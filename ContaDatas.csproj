@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>src\ContaData.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="src\ContaData.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BrazilHolidays.Net" Version="1.0.4" />

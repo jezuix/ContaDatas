@@ -7,6 +7,8 @@ namespace ContaDatas
     public partial class Main : Form
     {
         private IList<DataGridViewObj> ListButtonSequence { get; set; } = [];
+        private DateTime UltimaDataCalculada { get; set; } = DateTime.MinValue;
+        private int QuantidadeParcela { get; set; } = 0;
 
         public Main()
         {
@@ -19,10 +21,16 @@ namespace ContaDatas
         private void DadosIniciais()
         {
             dtpDataInicial.Value = DateTime.Today;
+            dtpDataInicial.Enabled = true;
+
             txtQtdDias.Text = "30";
+
             chkDiasUteis.Checked = false;
-            txtQtdParcelas.Text = "1";
+            chkDiasUteis.Enabled = true;
+
             ListButtonSequence = [];
+            UltimaDataCalculada = DateTime.MinValue;
+            QuantidadeParcela = 0;
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
@@ -38,31 +46,35 @@ namespace ContaDatas
 
         private void txtQtdDias_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !ValidateKeyPressIsValidNumber(e);
-        }
-
-        private void txtQtdParcelas_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !ValidateKeyPressIsValidNumber(e);
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btnCalcular_Click(null!, null!);
+            }
+            else
+            {
+                e.Handled = !ValidateKeyPressIsValidNumber(e);
+            }
         }
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            ListButtonSequence = [];
+            if (UltimaDataCalculada == DateTime.MinValue)
+            {
+                dtpDataInicial.Enabled = false;
+                chkDiasUteis.Enabled = false;
+                UltimaDataCalculada = dtpDataInicial.Value;
+            }
 
             if (!int.TryParse(txtQtdDias.Text, out int qtdDias)) MessageBox.Show("Quantidade de dias inválida", "Quantidade de dias", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            if (!int.TryParse(txtQtdParcelas.Text, out int qtdParcelas)) MessageBox.Show("Quantidade de parcelas inválida", "Quantidade de parcelas", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             if (qtdDias <= 0) MessageBox.Show("Quantidade de dias deve ser maior que 0", "Quantidade de dias", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            if (qtdParcelas <= 0) MessageBox.Show("Quantidade de parcelas deve ser maior que 0", "Quantidade de parcelas", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             var apenasDiasUteis = chkDiasUteis.Checked;
-            var dataCalulada = dtpDataInicial.Value;
-            for (int i = 0; i < qtdParcelas; i++)
-            {
-                dataCalulada = apenasDiasUteis ? SomaDiasUteis.Somar(dataCalulada, qtdDias) : dataCalulada.AddDays(qtdDias);
-                ListButtonSequence.Add(new() { DataParcela = dataCalulada.ToShortDateString(), NumeroParcela = $"{i + 1}" });
-            }
+
+            QuantidadeParcela++;
+
+            UltimaDataCalculada = apenasDiasUteis ? SomaDiasUteis.Somar(UltimaDataCalculada, qtdDias) : UltimaDataCalculada.AddDays(qtdDias);
+            ListButtonSequence.Add(new() { DataParcela = UltimaDataCalculada.ToShortDateString(), NumeroParcela = $"{QuantidadeParcela}", Dias = $"{qtdDias}" });
 
             UpdateDataGridView();
         }
@@ -79,7 +91,7 @@ namespace ContaDatas
             dgvContagemDatas.AutoGenerateColumns = false;
             dgvContagemDatas.AllowUserToAddRows = false;
 
-            //Text 
+            //Número da Parcela 
             dgvContagemDatas.Columns.Add(new DataGridViewColumn()
             {
                 HeaderText = "Número da Parcela",
@@ -89,13 +101,23 @@ namespace ContaDatas
                 CellTemplate = new DataGridViewTextBoxCell()
             });
 
-            //Control
+            //Data da Parcela
             dgvContagemDatas.Columns.Add(new DataGridViewColumn()
             {
                 HeaderText = "Data da Parcela",
                 Visible = true,
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
                 DataPropertyName = "DataParcela",
+                CellTemplate = new DataGridViewTextBoxCell()
+            });
+
+            //Quantidade de Dias
+            dgvContagemDatas.Columns.Add(new DataGridViewColumn()
+            {
+                HeaderText = "Dias",
+                Visible = true,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                DataPropertyName = "Dias",
                 CellTemplate = new DataGridViewTextBoxCell()
             });
         }

@@ -33,14 +33,11 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
             txtQtdDias = new TextBox();
-            txtQtdParcelas = new TextBox();
             chkDiasUteis = new CheckBox();
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            label8 = new Label();
             btnCalcular = new Button();
             btnLimpar = new Button();
             dgvContagemDatas = new DataGridView();
@@ -52,7 +49,7 @@
             dtpDataInicial.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             dtpDataInicial.CustomFormat = "";
             dtpDataInicial.Format = DateTimePickerFormat.Short;
-            dtpDataInicial.Location = new Point(343, 15);
+            dtpDataInicial.Location = new Point(437, 15);
             dtpDataInicial.Name = "dtpDataInicial";
             dtpDataInicial.Size = new Size(150, 31);
             dtpDataInicial.TabIndex = 0;
@@ -69,7 +66,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 54);
+            label2.Location = new Point(12, 81);
             label2.Name = "label2";
             label2.Size = new Size(175, 25);
             label2.TabIndex = 2;
@@ -78,46 +75,27 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 90);
+            label3.Location = new Point(12, 51);
             label3.Name = "label3";
             label3.Size = new Size(237, 25);
             label3.TabIndex = 3;
             label3.Text = "Considerar apenas dias úteis";
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(12, 126);
-            label4.Name = "label4";
-            label4.Size = new Size(199, 25);
-            label4.TabIndex = 4;
-            label4.Text = "Quantidade de parcelas";
-            // 
             // txtQtdDias
             // 
             txtQtdDias.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtQtdDias.Location = new Point(343, 51);
+            txtQtdDias.Location = new Point(437, 78);
             txtQtdDias.MaxLength = 3;
             txtQtdDias.Name = "txtQtdDias";
             txtQtdDias.Size = new Size(150, 31);
             txtQtdDias.TabIndex = 1;
             txtQtdDias.KeyPress += txtQtdDias_KeyPress;
             // 
-            // txtQtdParcelas
-            // 
-            txtQtdParcelas.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtQtdParcelas.Location = new Point(343, 123);
-            txtQtdParcelas.MaxLength = 2;
-            txtQtdParcelas.Name = "txtQtdParcelas";
-            txtQtdParcelas.Size = new Size(150, 31);
-            txtQtdParcelas.TabIndex = 3;
-            txtQtdParcelas.KeyPress += txtQtdParcelas_KeyPress;
-            // 
             // chkDiasUteis
             // 
             chkDiasUteis.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             chkDiasUteis.AutoSize = true;
-            chkDiasUteis.Location = new Point(343, 92);
+            chkDiasUteis.Location = new Point(437, 53);
             chkDiasUteis.Name = "chkDiasUteis";
             chkDiasUteis.Size = new Size(22, 21);
             chkDiasUteis.TabIndex = 2;
@@ -129,41 +107,32 @@
             label5.Enabled = false;
             label5.Location = new Point(111, 30);
             label5.Name = "label5";
-            label5.Size = new Size(221, 1);
+            label5.Size = new Size(321, 1);
             label5.TabIndex = 8;
             // 
             // label6
             // 
             label6.BorderStyle = BorderStyle.Fixed3D;
             label6.Enabled = false;
-            label6.Location = new Point(188, 66);
+            label6.Location = new Point(188, 93);
             label6.Name = "label6";
-            label6.Size = new Size(144, 1);
+            label6.Size = new Size(244, 1);
             label6.TabIndex = 9;
             // 
             // label7
             // 
             label7.BorderStyle = BorderStyle.Fixed3D;
             label7.Enabled = false;
-            label7.Location = new Point(250, 102);
+            label7.Location = new Point(250, 63);
             label7.Name = "label7";
-            label7.Size = new Size(82, 1);
+            label7.Size = new Size(182, 1);
             label7.TabIndex = 10;
-            // 
-            // label8
-            // 
-            label8.BorderStyle = BorderStyle.Fixed3D;
-            label8.Enabled = false;
-            label8.Location = new Point(212, 138);
-            label8.Name = "label8";
-            label8.Size = new Size(120, 1);
-            label8.TabIndex = 11;
             // 
             // btnCalcular
             // 
-            btnCalcular.Location = new Point(12, 161);
+            btnCalcular.Location = new Point(12, 115);
             btnCalcular.Name = "btnCalcular";
-            btnCalcular.Size = new Size(481, 34);
+            btnCalcular.Size = new Size(575, 34);
             btnCalcular.TabIndex = 12;
             btnCalcular.Text = "Calcular";
             btnCalcular.UseVisualStyleBackColor = true;
@@ -173,9 +142,9 @@
             // 
             btnLimpar.Location = new Point(12, 411);
             btnLimpar.Name = "btnLimpar";
-            btnLimpar.Size = new Size(481, 34);
+            btnLimpar.Size = new Size(575, 34);
             btnLimpar.TabIndex = 13;
-            btnLimpar.Text = "Limpar Tela";
+            btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = true;
             btnLimpar.Click += btnLimpar_Click;
             // 
@@ -186,31 +155,28 @@
             dgvContagemDatas.AllowUserToResizeRows = false;
             dgvContagemDatas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvContagemDatas.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dgvContagemDatas.Location = new Point(12, 201);
+            dgvContagemDatas.Location = new Point(12, 155);
             dgvContagemDatas.MultiSelect = false;
             dgvContagemDatas.Name = "dgvContagemDatas";
             dgvContagemDatas.ReadOnly = true;
             dgvContagemDatas.RowHeadersWidth = 62;
-            dgvContagemDatas.Size = new Size(481, 204);
+            dgvContagemDatas.Size = new Size(575, 250);
             dgvContagemDatas.TabIndex = 14;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(505, 454);
+            ClientSize = new Size(599, 454);
             Controls.Add(dgvContagemDatas);
             Controls.Add(btnLimpar);
             Controls.Add(btnCalcular);
             Controls.Add(dtpDataInicial);
             Controls.Add(txtQtdDias);
             Controls.Add(chkDiasUteis);
-            Controls.Add(txtQtdParcelas);
-            Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
-            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -230,14 +196,11 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label label4;
         private TextBox txtQtdDias;
-        private TextBox txtQtdParcelas;
         private CheckBox chkDiasUteis;
         private Label label5;
         private Label label6;
         private Label label7;
-        private Label label8;
         private Button btnCalcular;
         private Button btnLimpar;
         private DataGridView dgvContagemDatas;

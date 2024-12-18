@@ -4,5 +4,6 @@
     {
         public required string NumeroParcela { get; set; }
         public required string DataParcela { get; set; }
+        public required string Dias { get; set; }
     }
 }
