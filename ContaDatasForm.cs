@@ -7,7 +7,7 @@ namespace ContaDatas
     public partial class Main : Form
     {
         private IList<DataGridViewObj> ListButtonSequence { get; set; } = [];
-        private DateTime UltimaDataCalculada { get; set; } = DateTime.MinValue;
+        private DateTime? UltimaDataCalculada { get; set; } = null;
         private int QuantidadeParcela { get; set; } = 0;
 
         public Main()
@@ -29,7 +29,7 @@ namespace ContaDatas
             chkDiasUteis.Enabled = true;
 
             ListButtonSequence = [];
-            UltimaDataCalculada = DateTime.MinValue;
+            UltimaDataCalculada = null;
             QuantidadeParcela = 0;
         }
 
@@ -49,6 +49,8 @@ namespace ContaDatas
             if (e.KeyChar == (char)Keys.Return)
             {
                 btnCalcular_Click(null!, null!);
+
+                e.Handled = true;
             }
             else
             {
@@ -58,23 +60,33 @@ namespace ContaDatas
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            if (UltimaDataCalculada == DateTime.MinValue)
+            if (!int.TryParse(txtQtdDias.Text, out int qtdDias))
             {
-                dtpDataInicial.Enabled = false;
-                chkDiasUteis.Enabled = false;
-                UltimaDataCalculada = dtpDataInicial.Value;
+                MessageBox.Show("Quantidade de dias inválida", "Quantidade de dias", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            if (!int.TryParse(txtQtdDias.Text, out int qtdDias)) MessageBox.Show("Quantidade de dias inválida", "Quantidade de dias", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (qtdDias <= 0 && UltimaDataCalculada.HasValue)
+            {
+                MessageBox.Show("Apenas o primeiro dia pode ser igual a 0, demais dias deve ser maior que 0", "Quantidade de dias", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            if (qtdDias <= 0) MessageBox.Show("Quantidade de dias deve ser maior que 0", "Quantidade de dias", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!UltimaDataCalculada.HasValue)
+                UltimaDataCalculada = dtpDataInicial.Value;
+
+            dtpDataInicial.Enabled = false;
+            chkDiasUteis.Enabled = false;
+
+            txtQtdDias.SelectAll();
+            txtQtdDias.Focus();
 
             var apenasDiasUteis = chkDiasUteis.Checked;
 
             QuantidadeParcela++;
 
-            UltimaDataCalculada = apenasDiasUteis ? SomaDiasUteis.Somar(UltimaDataCalculada, qtdDias) : UltimaDataCalculada.AddDays(qtdDias);
-            ListButtonSequence.Add(new() { DataParcela = UltimaDataCalculada.ToShortDateString(), NumeroParcela = $"{QuantidadeParcela}", Dias = $"{qtdDias}" });
+            UltimaDataCalculada = apenasDiasUteis ? SomaDiasUteis.Somar(UltimaDataCalculada.Value, qtdDias) : UltimaDataCalculada.Value.AddDays(qtdDias);
+            ListButtonSequence.Add(new() { DataParcela = UltimaDataCalculada.Value.ToShortDateString(), NumeroParcela = $"{QuantidadeParcela}", Dias = $"{qtdDias}" });
 
             UpdateDataGridView();
         }
@@ -120,6 +132,30 @@ namespace ContaDatas
                 DataPropertyName = "Dias",
                 CellTemplate = new DataGridViewTextBoxCell()
             });
+        }
+
+        private void dtpDataInicial_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btnCalcular_Click(null!, null!);
+
+                e.Handled = true;
+            }
+            else
+                e.Handled = false;
+        }
+
+        private void chkDiasUteis_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btnCalcular_Click(null!, null!);
+
+                e.Handled = true;
+            }
+            else
+                e.Handled = false;
         }
     }
 }

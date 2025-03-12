@@ -53,6 +53,7 @@
             dtpDataInicial.Name = "dtpDataInicial";
             dtpDataInicial.Size = new Size(150, 31);
             dtpDataInicial.TabIndex = 0;
+            dtpDataInicial.KeyPress += dtpDataInicial_KeyPress;
             // 
             // label1
             // 
@@ -88,7 +89,7 @@
             txtQtdDias.MaxLength = 3;
             txtQtdDias.Name = "txtQtdDias";
             txtQtdDias.Size = new Size(150, 31);
-            txtQtdDias.TabIndex = 1;
+            txtQtdDias.TabIndex = 2;
             txtQtdDias.KeyPress += txtQtdDias_KeyPress;
             // 
             // chkDiasUteis
@@ -98,8 +99,9 @@
             chkDiasUteis.Location = new Point(437, 53);
             chkDiasUteis.Name = "chkDiasUteis";
             chkDiasUteis.Size = new Size(22, 21);
-            chkDiasUteis.TabIndex = 2;
+            chkDiasUteis.TabIndex = 1;
             chkDiasUteis.UseVisualStyleBackColor = true;
+            chkDiasUteis.KeyPress += chkDiasUteis_KeyPress;
             // 
             // label5
             // 
@@ -133,17 +135,18 @@
             btnCalcular.Location = new Point(12, 115);
             btnCalcular.Name = "btnCalcular";
             btnCalcular.Size = new Size(575, 34);
-            btnCalcular.TabIndex = 12;
+            btnCalcular.TabIndex = 3;
             btnCalcular.Text = "Calcular";
             btnCalcular.UseVisualStyleBackColor = true;
             btnCalcular.Click += btnCalcular_Click;
             // 
             // btnLimpar
             // 
-            btnLimpar.Location = new Point(12, 411);
+            btnLimpar.Anchor = AnchorStyles.Bottom;
+            btnLimpar.Location = new Point(12, 598);
             btnLimpar.Name = "btnLimpar";
             btnLimpar.Size = new Size(575, 34);
-            btnLimpar.TabIndex = 13;
+            btnLimpar.TabIndex = 5;
             btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = true;
             btnLimpar.Click += btnLimpar_Click;
@@ -160,14 +163,14 @@
             dgvContagemDatas.Name = "dgvContagemDatas";
             dgvContagemDatas.ReadOnly = true;
             dgvContagemDatas.RowHeadersWidth = 62;
-            dgvContagemDatas.Size = new Size(575, 250);
-            dgvContagemDatas.TabIndex = 14;
+            dgvContagemDatas.Size = new Size(575, 437);
+            dgvContagemDatas.TabIndex = 4;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(599, 454);
+            ClientSize = new Size(599, 641);
             Controls.Add(dgvContagemDatas);
             Controls.Add(btnLimpar);
             Controls.Add(btnCalcular);
